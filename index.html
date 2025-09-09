@@ -3,70 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tuma Ujumbe - Dee Boy Pro</title>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #e0f7fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: #ffffff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      text-align: center;
-      width: 90%;
-      max-width: 400px;
-    }
-    h2 {
-      color: #00796b;
-      margin-bottom: 30px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 12px 15px;
-      border-radius: 10px;
-      border: 1px solid #b2dfdb;
-      margin-bottom: 20px;
-      font-size: 16px;
-      outline: none;
-      transition: 0.3s;
-    }
-    input[type="text"]:focus {
-      border-color: #00796b;
-      box-shadow: 0 0 5px #00796b;
-    }
-    button {
-      background: #00796b;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: #004d40;
-    }
-  </style>
+  <title>Tuma Ujumbe</title>
 </head>
 <body>
-  <div class="container">
-    <h2>Tuma Ujumbe</h2>
-    <form id="messageForm">
-      <input type="text" id="ujumbe" placeholder="Andika ujumbe..." required>
-      <button type="submit">Tuma</button>
-    </form>
-  </div>
+  <h2>Tuma Ujumbe</h2>
+  <input type="text" id="ujumbe" placeholder="Andika ujumbe...">
+  <button id="tumaBtn">Tuma</button>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyA-q_C5ueXQ_6BkNcN3dOzQRywzscOqDa0",
       authDomain: "mnubimnubi-d4e90.firebaseapp.com",
@@ -78,18 +25,16 @@
       measurementId: "G-DG0XHYCT17"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-    document.getElementById("messageForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      let ujumbe = document.getElementById("ujumbe").value;
-
-      db.ref("ujumbe").set(ujumbe);
-
+    const tumaBtn = document.getElementById("tumaBtn");
+    tumaBtn.addEventListener("click", () => {
+      const msg = document.getElementById("ujumbe").value;
+      set(ref(db, 'ujumbe'), msg);
       document.getElementById("ujumbe").value = "";
       alert("✅ Ujumbe umetumwa!");
     });
   </script>
 </body>
-</html>
+</html>      
